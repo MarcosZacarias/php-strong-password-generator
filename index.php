@@ -1,24 +1,38 @@
 <?php
+// Possibili caratteri per la password
 $possible_characters = "abcdefgefghilmnopqrstuvzABCDEFGHILMNOPQRSTUVZ0123456789£$%&@#§!?";
 
+// Verifica se il form è stato inviato
 $check_form = isset($_GET["numb-password"]);
 
+// Se si invia il form
 if ($check_form) {
+  // lunghezza della password dal numero richiesto dal form
   $lenght_passw = (int) $_GET["numb-password"];
+
+  // Richiamo la funzione per generare la password
   $password = gen_passw($possible_characters, $lenght_passw);
   // var_dump($password);
 
 }
 
+// Funzione per generare la password
 function gen_passw($char_string, $lenght_passw)
 {
   $password = "";
   // var_dump($lenght_passw);
+
+  // Ciclo per creare la lunghezza della password 
   for ($i = 1; $i <= $lenght_passw; $i++) {
+
+    // Creare numeri randomici
     $rand_number = rand(0, strlen($char_string) - 1);
     // var_dump($rand_number);
+
+    // Per ogni n° random corrisponde una lettera da generare
     $password .= $char_string[$rand_number];
   }
+  // Ritorno la password completa
   return $password;
 }
 
@@ -37,7 +51,7 @@ function gen_passw($char_string, $lenght_passw)
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Titolo</title>
+  <title>PHP Strong Password Generator</title>
 
   <!-- LINK VUE.JS -->
   <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
