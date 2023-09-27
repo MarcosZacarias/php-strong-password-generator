@@ -1,3 +1,36 @@
+<?php
+$possible_characters = "abcdefgefghilmnopqrstuvzABCDEFGHILMNOPQRSTUVZ0123456789£$%&@#§!?";
+
+$check_form = isset($_GET["numb-password"]);
+
+if ($check_form) {
+  $lenght_passw = (int) $_GET["numb-password"];
+  $password = gen_passw($possible_characters, $lenght_passw);
+  // var_dump($password);
+
+}
+
+function gen_passw($char_string, $lenght_passw)
+{
+  $password = "";
+  // var_dump($lenght_passw);
+  for ($i = 1; $i <= $lenght_passw; $i++) {
+    $rand_number = rand(0, strlen($char_string) - 1);
+    // var_dump($rand_number);
+    $password .= $char_string[$rand_number];
+  }
+  return $password;
+}
+
+
+
+?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,13 +63,14 @@
         <form action="" method="GET">
 
           <div class="form-floating mb-3">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+              name="numb-password">
               <option selected>Quanti caratteri deve avere la password</option>
-              <option value="1">8</option>
-              <option value="2">9</option>
-              <option value="3">10</option>
-              <option value="4">11</option>
-              <option value="5">12</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
 
             </select>
             <label for="floatingSelect">Scegli la lunghezza della password</label>
@@ -46,6 +80,19 @@
 
       </div>
     </div>
+    <?php if ($check_form): ?>
+      <div class="card">
+        <div class="card-header">
+          Password generata
+        </div>
+        <div class="card-body">
+          La tua password è:
+          <strong>
+            <?= $password; ?>
+          </strong>
+        </div>
+      </div>
+    <?php endif; ?>
   </div>
 
 
