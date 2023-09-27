@@ -14,11 +14,15 @@ if ($check_form) {
   // lunghezza della password dal numero richiesto dal form
   $_SESSION["lenght_passw"] = (int) $_GET["numb-password"];
 
-  // Richiamo la funzione per generare la password
-  $_SESSION["password"] = gen_passw($_SESSION["possible_characters"], $_SESSION["lenght_passw"]);
-  // var_dump($password);
+  if ($_SESSION["lenght_passw"] > 0) {
+    // Richiamo la funzione per generare la password
+    $_SESSION["password"] = gen_passw($_SESSION["possible_characters"], $_SESSION["lenght_passw"]);
+    // var_dump($password);
 
-  header("Location: ./success.php");
+    header("Location: ./success.php");
+  }
+
+
 
 }
 
@@ -48,11 +52,17 @@ if ($check_form) {
       </div>
       <div class="card-body">
         <form action="" method="GET">
+          <?php if ($check_form && $_SESSION["lenght_passw"] <= 0): ?>
+            <div class="alert alert-danger" role="alert">
+              Seleziona un valore
+            </div>
+          <?php endif; ?>
+
 
           <div class="form-floating mb-3">
             <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
               name="numb-password">
-              <option selected>Quanti caratteri deve avere la password</option>
+              <option selected value="0">Quanti caratteri deve avere la password</option>
               <option value="8">8</option>
               <option value="9">9</option>
               <option value="10">10</option>
