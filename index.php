@@ -1,8 +1,10 @@
 <?php
 include __DIR__ . "/partials/functions.php";
 
+session_start();
+
 // Possibili caratteri per la password
-$possible_characters = "abcdefgefghilmnopqrstuvzABCDEFGHILMNOPQRSTUVZ0123456789£$%&@#§!?";
+$_SESSION["possible_characters"] = "abcdefgefghilmnopqrstuvzABCDEFGHILMNOPQRSTUVZ0123456789£$%&@#§!?";
 
 // Verifica se il form è stato inviato
 $check_form = isset($_GET["numb-password"]);
@@ -10,11 +12,13 @@ $check_form = isset($_GET["numb-password"]);
 // Se si invia il form
 if ($check_form) {
   // lunghezza della password dal numero richiesto dal form
-  $lenght_passw = (int) $_GET["numb-password"];
+  $_SESSION["lenght_passw"] = (int) $_GET["numb-password"];
 
   // Richiamo la funzione per generare la password
-  $password = gen_passw($possible_characters, $lenght_passw);
+  $_SESSION["password"] = gen_passw($_SESSION["possible_characters"], $_SESSION["lenght_passw"]);
   // var_dump($password);
+
+  header("Location: ./success.php");
 
 }
 
@@ -63,19 +67,7 @@ if ($check_form) {
 
       </div>
     </div>
-    <?php if ($check_form): ?>
-      <div class="card">
-        <div class="card-header">
-          Password generata
-        </div>
-        <div class="card-body">
-          La tua password è:
-          <strong>
-            <?= $password; ?>
-          </strong>
-        </div>
-      </div>
-    <?php endif; ?>
+
   </div>
 
 
